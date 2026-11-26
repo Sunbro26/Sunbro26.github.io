@@ -1071,7 +1071,7 @@ em .tk::after,i .tk::after{left:58%}
 </div><figcaption>Admiralty Plate · <em>Cēndhar</em>-class mobile battle station (100–140 km). Twenty-five articulated pinions (eighteen lateral in three banks, five beneath the forward citadel, and two aft booster-pods) sweep tightly aft along the waisted Gothic spine into a ~30 km folded profile for the Run.</figcaption></figure>
 
 <ul>
-<li><strong>Folding Wing Mechanics:</strong> Because Run draw scales sharply with cross-sectional width, all twenty-five articulated pinions sweep tightly aft along the split cathedral spine before entering FTL. Dropping into combat or orbital watch, the colossus unfolds its full ~100-kilometre seraphic span—serving at once as sweeping <strong>thermal radiator plumes</strong>, wide-baseline <strong>aimable weapon arrays</strong>, internal <strong>hangar vaults berthing 3,000–5,000 escorts</strong>, and colossal <strong>thread-wind sails</strong>.</li>
+<li><strong>Folding Wing Mechanics:</strong> Because Run draw scales sharply with cross-sectional width, all twenty-five articulated pinions sweep tightly aft along the split cathedral spine before entering FTL. Dropping into combat or orbital watch, the colossus unfolds its full ~220-kilometre seraphic span—serving at once as sweeping <strong>thermal radiator plumes</strong>, wide-baseline <strong>aimable weapon arrays</strong>, internal <strong>hangar vaults berthing 3,000–5,000 escorts</strong>, and colossal <strong>thread-wind sails</strong>.</li>
 <li><strong>Thrusters &amp; Floating Orbs:</strong> Dense aft clusters of fusion-torch bells drive heavy manoeuvring inside a star’s shoal line, while detached golden <strong>Lift-orbs</strong> orbit capital prows and wing-joints as wide-angle Listening sensors, ward focal prisms and point-defence nodes.</li>
 <li><strong>Scaled Fleet Lineage:</strong> Lesser vessels echo the same beast-winged silhouette pared clean by tier—<strong>Battleships &amp; Fleet Carriers</strong> (two to three swept wing-pairs), predatory <strong>Destroyers &amp; Frigates</strong> (one to two razor-swept avian pairs), sleek single-fin <strong>Patrol Cruisers</strong>, and broad twin-nacelle catamaran <strong>Transports, Relief Arks &amp; Auxiliaries</strong> cradling modular assault drop-bays, walker-landers and evacuee shells between armoured forward booms.</li>
 </ul>
@@ -2090,14 +2090,14 @@ em .tk::after,i .tk::after{left:58%}
       callout([10, 15, 2],    34, 560,  'Vertically-Stretched Curved Twin Nacelles');
       callout([33, 2, -29],   34, 584,  'Third Mini-Nacelle & Slender Wing-Pylon');
       callout([35, 0, -76],   34, 608,  'Prominent 5-Wing Downward Forked Fan');
-      callout([68, 14.5, -26],524, 584, 'Hanging Conical Aft Booster-Pods');
+      callout([68, 14.5, -26],524, 584, 'Concealed Aft Booster-Pods (See Front & Side)');
       callout([54, 72, 14],   524, 608, 'Carrier Bay Trenches & Forked Radiator Tips');
 
-      add('line', { x1: 34, y1: 658, x2: 304, y2: 658, stroke: '#e6b94a', 'stroke-width': 1.4 }, uiG);
-      [34, 169, 304].forEach(x => add('line', { x1: x, y1: 652, x2: x, y2: 664, stroke: '#e6b94a', 'stroke-width': 1.2 }, uiG));
+      add('line', { x1: 34, y1: 658, x2: 284, y2: 658, stroke: '#e6b94a', 'stroke-width': 1.4 }, uiG);
+      [34, 159, 284].forEach(x => add('line', { x1: x, y1: 652, x2: x, y2: 664, stroke: '#e6b94a', 'stroke-width': 1.2 }, uiG));
       txt(34, 680, '0', 't-sub', { fill: '#b5a7c3', 'font-size': 11 });
-      txt(169, 680, '50 km', 't-sub', { fill: '#b5a7c3', 'font-size': 11, 'text-anchor': 'middle' });
-      txt(304, 680, '100 km', 't-sub', { fill: '#b5a7c3', 'font-size': 11, 'text-anchor': 'end' });
+      txt(159, 680, '50 km', 't-sub', { fill: '#b5a7c3', 'font-size': 11, 'text-anchor': 'middle' });
+      txt(284, 680, '100 km', 't-sub', { fill: '#b5a7c3', 'font-size': 11, 'text-anchor': 'end' });
 
       // ==================== RIGHT ORTHOGRAPHIC COLUMN ====================
       const forkWing2D = (x0, y0, x1, y1, w0, w1, forkR, fill, hasBays, parent) => {
@@ -2170,7 +2170,7 @@ em .tk::after,i .tk::after{left:58%}
       }, inA);
       add('circle', { cx: fx, cy: fy - 1, r: 5.0, fill: 'url(#cd-pinch)' }, inA);
       add('ellipse', { cx: fx, cy: fy + 51, rx: 6.5, ry: 4.0, fill: 'url(#cd-dome-top)', stroke: '#e6b94a', 'stroke-width': .75 }, inA);
-      txt(989, 236, 'Front · ~30 km core · 115 km span', 't-sub', { fill: '#b5a7c3', 'font-size': 9.0, 'text-anchor': 'middle' }, inA);
+      txt(989, 236, 'Front · ~30 km core · 220 km span', 't-sub', { fill: '#b5a7c3', 'font-size': 9.0, 'text-anchor': 'middle' }, inA);
 
       // INSET B: TOP-DOWN PLAN
       const inB = add('g', {});
