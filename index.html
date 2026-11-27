@@ -59,7 +59,7 @@ nav.toc a.on{text-decoration:underline;text-decoration-color:var(--goldf);text-u
 @media (min-width:900px){nav.toc{position:sticky;top:0}}
 
 /* reading column */
-main{padding:0 1.25rem 6rem}
+main{padding:0 1.25rem 6rem;overflow-x:clip}
 .sec{max-width:42rem;margin:0 auto;padding-top:4.5rem;scroll-margin-top:3.5rem}
 h2{font-family:var(--display);font-weight:600;font-size:clamp(2rem,5vw,2.75rem);line-height:1.1;margin:0 0 1.5rem;color:var(--ink)}
 h2 .num{display:block;font-size:1.1rem;font-style:italic;font-weight:500;color:var(--gold);margin-bottom:.3rem}
@@ -198,6 +198,9 @@ ol.needle li.hot b{color:var(--crimson)}
 .atlasfig{background:#0b0614;border:1px solid color-mix(in srgb,var(--goldf) 32%,var(--rule));border-radius:16px;padding:.75rem;margin:2.2rem 0}
 .atlasfig svg{display:block;width:100%;min-width:740px;height:auto;border-radius:10px}
 .atlasfig figcaption{color:#b9acc9;padding:.35rem .5rem .3rem;display:flex;justify-content:space-between;flex-wrap:wrap;gap:.5rem}
+@media (min-width:860px){
+ .shipfig,.atlasfig{width:min(1340px,92vw);max-width:none;margin-left:50%;margin-right:0;transform:translateX(-50%);padding:.95rem 1.05rem}
+}
 .atlasfig figcaption a{color:#e6b94a;text-decoration:none;font-style:normal}
 .atlasfig figcaption a:hover{text-decoration:underline}
 .at-name{font-family:var(--display);font-size:29px;font-weight:700;fill:#f5effa;paint-order:stroke;stroke:rgba(8,4,16,.9);stroke-width:6px;stroke-linejoin:round}
@@ -1102,7 +1105,7 @@ em .tk::after,i .tk::after{left:58%}
 
 <figure class="fig-wide shipfig">
 <div class="ship-bar">
-<span class="ship-hint">Drag the 3/4 view to orbit · zero idle GPU load</span>
+<span class="ship-hint">Drag to orbit · choose a preset or fold for the Run</span>
 <div class="ship-btns">
 <button class="ship-btn" id="cd-fold-btn" type="button">Sheathe for Run (~30 km)</button>
 <button class="ship-btn active" data-cd-view="hero" type="button">Hero 3/4</button>
@@ -2361,109 +2364,135 @@ em .tk::after,i .tk::after{left:58%}
           }
         };
 
-        // 1. RECESSED ROUNDED CENTRAL CORE (Smooth Sword Breaker curved spine + pointed stern lance!)
-        // Recessed at x = -33.5 behind twin prow tips (-60), tapering to pointed central stern spike at +62 (Ship.paint Top!)
+        // 1. SCULPTED FACETED CENTRAL HULL (Non-zeppelin! Broadened fore-mantle, flattened pinched mid-gallery, wide angular aft bulwark & tapered stern lance!)
         const coreStations = [
-          { x: -33.5, ry: 0.4, rzU: 0.5, rzD: 0.5, z0: 0.5 },
-          { x: -29.0, ry: 5.2, rzU: 5.6, rzD: 4.8, z0: 0.6 },
-          { x: -18.0, ry: 7.0, rzU: 7.8, rzD: 6.4, z0: 0.9 },
-          { x: -4.0,  ry: 6.8, rzU: 9.0, rzD: 6.2, z0: 1.1 },
-          { x: 14.0,  ry: 6.0, rzU: 7.8, rzD: 5.5, z0: 0.7 },
-          { x: 34.0,  ry: 5.4, rzU: 6.0, rzD: 4.6, z0: 0.1 },
-          { x: 48.0,  ry: 4.2, rzU: 4.3, rzD: 3.5, z0: -0.2 },
-          { x: 56.0,  ry: 2.0, rzU: 2.2, rzD: 1.8, z0: -0.4 },
-          { x: 62.5,  ry: 0.3, rzU: 0.5, rzD: 0.4, z0: -0.5 }
+          { x: -39.0, yD: 0.3, yC: 0.5, yK: 0.2, zD: 1.2, zC: 0.4, zK: -0.4 }, // Sharp flattened needle spade-prow
+          { x: -31.5, yD: 3.4, yC: 5.5, yK: 2.0, zD: 2.7, zC: 0.5, zK: -2.2 }, // Wide horizontally flattened fore-blade
+          { x: -19.5, yD: 5.8, yC: 8.8, yK: 3.8, zD: 5.6, zC: 1.4, zK: -4.8 }, // Broad armored Fore-Mantle (swept arch root!)
+          { x:  -7.5, yD: 4.8, yC: 7.2, yK: 3.4, zD: 7.4, zC: 2.2, zK: -5.4 }, // Raised sculpted Command Terrace
+          { x:   6.0, yD: 2.8, yC: 4.4, yK: 2.2, zD: 3.6, zC: 0.6, zK: -3.8 }, // Deeply pinched & flattened mid-hull gallery!
+          { x:  21.5, yD: 6.0, yC: 8.8, yK: 4.0, zD: 6.4, zC: 1.6, zK: -4.7 }, // Broadened chamfered Aft Reactor Bulwark
+          { x:  37.5, yD: 4.7, yC: 7.0, yK: 3.0, zD: 4.7, zC: 0.9, zK: -3.6 }, // Wide flattened stern carapace
+          { x:  50.0, yD: 2.4, yC: 4.0, yK: 1.6, zD: 2.5, zC: 0.2, zK: -2.2 }, // Tapered stern exhaust saddle
+          { x:  64.5, yD: 0.2, yC: 0.4, yK: 0.2, zD: 0.4, zC: -0.2, zK: -0.6 } // Razor-flat trailing stern lance
         ];
-        const coreM = detail === 'high' ? 14 : 10;
-        const sampleCore = (st, a) => {
-          const ca = Math.cos(a), sa = Math.sin(a);
-          const rz = sa >= 0 ? st.rzU * (1 + 0.16 * Math.pow(sa, 3)) : st.rzD;
-          return [st.x, ca * st.ry, st.z0 + sa * rz];
-        };
-        const coreRings = coreStations.map(st => {
-          const ring = [];
-          for (let j = 0; j < coreM; j++) ring.push(sampleCore(st, (j / coreM) * Math.PI * 2));
-          return ring;
-        });
+        // Faceted 10-point chamfered stealth-cathedral ring (CCW viewed from -X: +Y -> +Z -> -Y -> -Z)
+        const coreRings = coreStations.map(st => [
+          [st.x,  st.yC,        st.zC],
+          [st.x,  st.yD,        st.zD],
+          [st.x,  st.yD * 0.35, st.zD + 0.55],
+          [st.x, -st.yD * 0.35, st.zD + 0.55],
+          [st.x, -st.yD,        st.zD],
+          [st.x, -st.yC,        st.zC],
+          [st.x, -st.yK,        st.zK + 0.8],
+          [st.x,  0,            st.zK - 0.5],
+          [st.x,  st.yK,        st.zK + 0.8],
+          [st.x,  st.yC * 0.92, (st.zC + st.zK) * 0.5]
+        ]);
         addLoft(coreRings, (u, j, M) => {
-          const sa = Math.sin(((j + 0.5) / M) * Math.PI * 2);
-          return { mat: sa < -0.25 ? 'hullDark' : 'core', stroke: 'self', sw: 0.46 };
+          const isBelly = j >= 5 && j <= 8;
+          const isDeck  = j >= 1 && j <= 3;
+          return { mat: isBelly ? 'hullDark' : (isDeck ? 'dome' : 'core'), stroke: 'self', sw: 0.46 };
         }, 'self', 0.46, false);
 
-        // Smooth curved dorsal spine gold meridian trim (sleek Sword Breaker curve, zero spiky teeth!)
-        addPolyline(coreStations.map(st => sampleCore(st, Math.PI * 0.5)), '#e8bc52', detail === 'high' ? 0.95 : 0.65, 0.85, 0.9);
-        addPolyline(coreStations.map(st => sampleCore(st, -Math.PI * 0.5)), '#9b6ae0', detail === 'high' ? 0.72 : 0.5, 0.68, 0.8);
+        // Crisp architectural dorsal deck trim rails, glowing recessed spine trough & flanking chine piping
+        addPolyline(coreStations.map(st => [st.x,  st.yD, st.zD + 0.12]), '#e8bc52', detail === 'high' ? 0.85 : 0.58, 0.82, 0.95);
+        addPolyline(coreStations.map(st => [st.x, -st.yD, st.zD + 0.12]), '#e8bc52', detail === 'high' ? 0.85 : 0.58, 0.82, 0.95);
+        addPolyline(coreStations.map(st => [st.x,  st.yC, st.zC]),        '#a678e8', detail === 'high' ? 0.65 : 0.45, 0.65, 0.85);
+        addPolyline(coreStations.map(st => [st.x, -st.yC, st.zC]),        '#a678e8', detail === 'high' ? 0.65 : 0.45, 0.65, 0.85);
+        addPolyline(coreStations.slice(3, 8).map(st => [st.x, 0, st.zD + 0.65]), '#cfaaff', detail === 'high' ? 1.15 : 0.72, 0.82, 1.0);
 
-        // Sleek recessed Sword-Breaker command bridge hood smoothly nestled on dorsal spine (x = -17..+18)
+        // Stepped sculpted Sword-Breaker command citadel shifted forward onto Fore-Mantle (asymmetric fore-to-aft silhouette!)
         const brSpec = [
-          { x: -17, ry: 0.5, zB: 7.1, zT: 7.7 },
-          { x: -11, ry: 3.4, zB: 7.6, zT: 11.2 },
-          { x: -1,  ry: 3.8, zB: 8.0, zT: 12.1 },
-          { x: 10,  ry: 2.9, zB: 7.3, zT: 10.3 },
-          { x: 19,  ry: 0.5, zB: 6.3, zT: 7.1 }
+          { x: -21.5, ry: 0.4, zB: 5.5, zT: 6.2 },
+          { x: -15.0, ry: 3.4, zB: 6.4, zT: 10.6 },
+          { x:  -6.0, ry: 4.0, zB: 7.4, zT: 12.2 },
+          { x:   3.0, ry: 2.5, zB: 5.8, zT: 9.2 },
+          { x:  11.0, ry: 0.4, zB: 5.0, zT: 5.8 }
         ];
         const brRings = brSpec.map(st => [
-          [st.x, -st.ry, st.zB], [st.x, -st.ry * 0.65, st.zT],
-          [st.x,  st.ry * 0.65, st.zT], [st.x,  st.ry, st.zB],
-          [st.x,  st.ry * 0.68, st.zB - 0.8], [st.x, -st.ry * 0.68, st.zB - 0.8]
+          [st.x,  st.ry,        st.zB],
+          [st.x,  st.ry * 0.58, st.zT],
+          [st.x, -st.ry * 0.58, st.zT],
+          [st.x, -st.ry,        st.zB],
+          [st.x, -st.ry * 0.65, st.zB - 0.8],
+          [st.x,  st.ry * 0.65, st.zB - 0.8]
         ]);
         addLoft(brRings, 'dome', 'self', 0.46, false);
-        // Clean gold collar trim along bridge brow & flanks
-        addPolyline(brSpec.map(st => [st.x, -st.ry * 0.66, st.zT + 0.1]), '#f0c766', 0.82, 0.86, 1.0);
-        addPolyline(brSpec.map(st => [st.x,  st.ry * 0.66, st.zT + 0.1]), '#f0c766', 0.82, 0.86, 1.0);
-        anchors.bridge = [-9, 0, 11.4];
+        addPolyline(brSpec.map(st => [st.x, -st.ry * 0.60, st.zT + 0.1]), '#f2ca68', 0.82, 0.88, 1.0);
+        addPolyline(brSpec.map(st => [st.x,  st.ry * 0.60, st.zT + 0.1]), '#f2ca68', 0.82, 0.88, 1.0);
+        anchors.bridge = [-11, 0, 11.4];
 
-        // Luminous bridge viewport slit & subtle micro-Gothic filigree arches scattered on core
-        prims.push({ type: 'line', a: [-11.5, -2.6, 10.1], b: [-11.5, 2.6, 10.1], stroke: '#fff2c2', sw: 1.55, zBias: 1.2 });
+        // Luminous bridge viewport slit & delicate scattered micro-Gothic filigree on core bulkheads
+        prims.push({ type: 'line', a: [-15.2, -2.5, 9.6], b: [-15.2, 2.5, 9.6], stroke: '#fff3c4', sw: 1.55, zBias: 1.2 });
         if (detail === 'high') {
-          // Delicate paired micro-Gothic sensor needles on bridge crown (tiny, refined - not jagged teeth!)
-          prims.push({ type: 'line', a: [-3, 0, 12.0], b: [0, 0, 15.8], stroke: '#f0c766', sw: 0.82 });
-          prims.push({ type: 'line', a: [4, 0, 11.1], b: [6.5, 0, 13.8], stroke: '#e6b94a', sw: 0.62 });
-          // Subtle recessed Orokin-Gothic pointed arch rib inlays across select bulkheads
-          [-24, 24, 38].forEach(rx => {
+          prims.push({ type: 'line', a: [-7, 0, 12.1], b: [-3.5, 0, 16.0], stroke: '#f0c766', sw: 0.82 });
+          prims.push({ type: 'line', a: [0, 0, 10.6],  b: [2.8, 0, 13.5],  stroke: '#e6b94a', sw: 0.62 });
+          // Stepped dorsal louver inlay ribs on the broadened aft reactor deck
+          [20, 27, 34].forEach(rx => {
             const st = coreStations.reduce((a, b) => Math.abs(b.x - rx) < Math.abs(a.x - rx) ? b : a);
-            const pts = [];
-            for (let k = -4; k <= 4; k++) pts.push(sampleCore(st, Math.PI * 0.5 + (k / 4) * 1.05));
-            addPolyline(pts, '#d8a63c', 0.52, 0.58, 0.85);
+            addPolyline([[rx, -st.yD * 0.92, st.zD + 0.15], [rx - 1.5, 0, st.zD + 0.72], [rx, st.yD * 0.92, st.zD + 0.15]], '#e6b94a', 0.56, 0.64, 0.9);
           });
         }
 
-        // Recessed Cēn Needle Pinch Aperture at core bow + pointed tail finial
-        prims.push({ type: 'pinch', p: [-33.8, 0, 0.5], r: 5.5 });
-        prims.push({ type: 'dot', p: [62.5, 0, -0.5], r: detail === 'high' ? 1.5 : 0.9, fill: '#f3ce74' });
+        // Recessed Cēn Needle Pinch Aperture at flattened spade-prow + trailing lance finial
+        prims.push({ type: 'pinch', p: [-39.2, 0, 0.4], r: 5.2 });
+        prims.push({ type: 'dot', p: [64.5, 0, -0.2], r: detail === 'high' ? 1.5 : 0.9, fill: '#f3ce74' });
 
-        // Central stern thruster cluster (3 recessed bells flanking the pointed stern tail)
-        prims.push({ type: 'thruster', p: [53.0, 0, 1.4], dir: [1, 0, 0], r: 2.7, plume: 13 });
+        // Central stern thruster cluster (3 recessed bells flanking the tapered stern lance)
+        prims.push({ type: 'thruster', p: [53.0, 0, 1.2], dir: [1, 0, 0], r: 2.6, plume: 13 });
         prims.push({ type: 'thruster', p: [49.5, -2.8, -1.4], dir: [1, 0, 0], r: 1.8, plume: 9 });
         prims.push({ type: 'thruster', p: [49.5,  2.8, -1.4], dir: [1, 0, 0], r: 1.8, plume: 9 });
 
-        // Transverse armored structural bridges joining core to both twin nacelles
-        [-22, -3, 24].forEach(bx => {
-          [-1, 1].forEach(side => {
-            const y0 = side * 5.2, y1 = side * 11.4, zb = -1.6, zt = 2.6;
-            const ring0 = [[bx - 2.5, y0, zb], [bx - 2.5, y0, zt], [bx + 2.5, y0, zt], [bx + 2.5, y0, zb]];
-            const ring1 = [[bx - 2.1, y1, zb], [bx - 2.1, y1, zt], [bx + 2.1, y1, zt], [bx + 2.1, y1, zb]];
-            addLoft([ring0, ring1], 'gold', '#f0c766', 0.35, false, true);
-          });
+        // ELEGANT SWEPT FLYING-BUTTRESS STRUCTURAL SPANS (Graceful titanium-violet airfoil arches with gold edge piping - NO chunky yellow bricks!)
+        const addSweptSpan = (side, xFore0, xAft0, xFore1, xAft1, y0, y1, zMidD, zMidV) => {
+          const ym = (y0 + y1) * 0.5;
+          const xFm = (xFore0 + xFore1) * 0.5 - 1.8, xAm = (xAft0 + xAft1) * 0.5 - 0.8;
+          const makeAirfoil = (xf, xa, y, zd, zv) => {
+            const xm = (xf + xa) * 0.5;
+            return [
+              [xf, y, (zd + zv) * 0.5],
+              [xm, y, zd],
+              [xa, y, (zd + zv) * 0.52],
+              [xm, y, zv]
+            ];
+          };
+          const r0 = makeAirfoil(xFore0, xAft0, side * y0, zMidD - 0.3, zMidV - 0.4);
+          const rM = makeAirfoil(xFm,    xAm,   side * ym, zMidD + 1.5, zMidV + 1.1);
+          const r1 = makeAirfoil(xFore1, xAft1, side * y1, zMidD - 0.2, zMidV - 0.5);
+          const rings = side > 0 ? [r0, rM, r1] : [r1, rM, r0];
+          addLoft(rings, (u, j) => ({ mat: j >= 2 ? 'hullDark' : 'core', stroke: 'self', sw: 0.42 }), 'self', 0.42, false, true);
+          // Fine sculpted rose-gold leading/trailing arch piping
+          addPolyline([r0[0], rM[0], r1[0]], '#f0c766', detail === 'high' ? 0.85 : 0.58, 0.85, 0.9);
+          addPolyline([r0[2], rM[2], r1[2]], '#cfaaff', detail === 'high' ? 0.65 : 0.45, 0.72, 0.85);
+          addPolyline([r0[1], rM[1], r1[1]], '#e6b94a', detail === 'high' ? 0.58 : 0.40, 0.65, 0.9);
+        };
+        [-1, 1].forEach(side => {
+          // Forward swept collar arch uniting broadened Fore-Mantle cleanly into canted nacelle inner crescent
+          addSweptSpan(side, -25.5, -11.5, -30.5, -16.5, 6.2, 13.8, 2.4, -1.6);
+          // Aft swept structural buttress uniting Aft Reactor Bulwark beneath twin Opera-House vaults
+          addSweptSpan(side,  17.5,  34.5,  22.5,  39.5, 6.4, 14.4, 2.8, -1.4);
         });
 
-        // 2. TWIN VERTICALLY-STRETCHED CURVED SWORD-BREAKER NACELLES (Bold crescent () Front + hourglass waist + wide rear domes!)
+        // 2. CANTED TWIN CRESCENT SWORD-BREAKER NACELLES (18-deg inward-top / outward-bottom roll for predatory silhouette!)
+        const nacCant = 18 * Math.PI / 180;
+        const cCant = Math.cos(nacCant), sCant = Math.sin(nacCant);
         const nacSpec = [
-          { x: -60.0, yc: 9.8,  ry: 0.4,  rz: 0.6,  zc: 0.4,  indent: 0.12 },
-          { x: -51.0, yc: 11.6, ry: 3.1,  rz: 6.8,  zc: 0.6,  indent: 0.36 },
-          { x: -40.0, yc: 13.4, ry: 5.0,  rz: 12.2, zc: 0.6,  indent: 0.50 },
-          { x: -26.0, yc: 14.4, ry: 6.3,  rz: 15.2, zc: 0.3,  indent: 0.58 }, // Muscular crescent shoulder!
-          { x: -12.0, yc: 13.8, ry: 5.8,  rz: 14.0, zc: 0.1,  indent: 0.52 },
-          { x:   4.0, yc: 12.0, ry: 4.3,  rz: 9.0,  zc: -0.2, indent: 0.40 }, // Classic Sword Breaker waist pinch!
-          { x:  15.0, yc: 14.4, ry: 7.2,  rz: 13.4, zc: 0.7,  indent: 0.32 },
-          { x:  28.0, yc: 16.2, ry: 9.0,  rz: 15.8, zc: 1.5,  indent: 0.26 }, // Broad bulbous rear armored dome lobe!
-          { x:  40.0, yc: 15.8, ry: 8.5,  rz: 14.8, zc: 1.3,  indent: 0.22 },
-          { x:  50.0, yc: 14.4, ry: 6.4,  rz: 11.6, zc: 0.7,  indent: 0.16 },
-          { x:  56.0, yc: 13.6, ry: 3.6,  rz: 7.4,  zc: 0.3,  indent: 0.10 }
+          { x: -60.0, yc: 10.6, ry: 0.4,  rz: 0.6,  zc: 0.4,  indent: 0.12 },
+          { x: -51.0, yc: 12.4, ry: 3.1,  rz: 6.8,  zc: 0.6,  indent: 0.36 },
+          { x: -40.0, yc: 14.2, ry: 5.0,  rz: 12.2, zc: 0.6,  indent: 0.50 },
+          { x: -26.0, yc: 15.2, ry: 6.2,  rz: 15.2, zc: 0.3,  indent: 0.58 }, // Muscular canted crescent shoulder!
+          { x: -12.0, yc: 14.6, ry: 5.7,  rz: 13.8, zc: 0.1,  indent: 0.52 },
+          { x:   4.0, yc: 12.8, ry: 4.2,  rz: 9.0,  zc: -0.2, indent: 0.40 }, // Classic Sword Breaker waist pinch!
+          { x:  15.0, yc: 15.2, ry: 7.0,  rz: 13.2, zc: 0.7,  indent: 0.32 },
+          { x:  28.0, yc: 16.8, ry: 8.4,  rz: 15.6, zc: 1.4,  indent: 0.26 }, // Broad canted rear armored lobe!
+          { x:  40.0, yc: 16.4, ry: 8.0,  rz: 14.6, zc: 1.2,  indent: 0.22 },
+          { x:  50.0, yc: 15.0, ry: 6.2,  rz: 11.4, zc: 0.6,  indent: 0.16 },
+          { x:  56.0, yc: 14.2, ry: 3.5,  rz: 7.2,  zc: 0.3,  indent: 0.10 }
         ];
         const nacM = detail === 'high' ? 18 : 12;
 
-        // Helper to sample exact outer surface point on nacelle for lights/filigree/mounts
+        // Helper to sample exact surface point on CANTED nacelle (top leans inward, bottom flares outward!)
         const sampleNac = (side, u, a) => {
           const fi = clamp(u, 0, 1) * (nacSpec.length - 1);
           const i0 = Math.min(nacSpec.length - 2, Math.floor(fi)), t = fi - i0;
@@ -2475,12 +2504,14 @@ em .tk::after,i .tk::after{left:58%}
           const zc = A.zc + (B.zc - A.zc) * t;
           const ind = A.indent + (B.indent - A.indent) * t;
           const ca = Math.cos(a), sa = Math.sin(a);
-          // Concave crescent () inner face (ca < 0) + flared lower cheek lip (sa < -0.5)
           let localY = ca * ry;
           if (ca < 0) localY += (-ca) * ry * ind * (1 - 0.50 * sa * sa);
           let localZ = sa * rz;
           if (sa < -0.50 && ca > -0.25) localY += ry * 0.16 * (-sa - 0.50);
-          return [x, side * (yc + localY), zc + localZ];
+          // Rotate local cross-section inward at top (+localZ -> -rotY) & outward at bottom (-localZ -> +rotY)!
+          const rotY = localY * cCant - localZ * sCant;
+          const rotZ = localY * sCant + localZ * cCant;
+          return [x, side * (yc + rotY), zc + rotZ];
         };
 
         [-1, 1].forEach(side => {
@@ -2493,7 +2524,6 @@ em .tk::after,i .tk::after{left:58%}
             }
             return ring;
           });
-          // Silky uninterrupted interference-titanium armor (self-colored seams, zero grid clutter!)
           addLoft(rings, (u, j, M) => {
             const a = ((side > 0 ? j + 0.5 : M - j - 0.5) / M) * Math.PI * 2;
             const sa = Math.sin(a);
@@ -2504,7 +2534,7 @@ em .tk::after,i .tk::after{left:58%}
             };
           }, 'self', 0.48, true);
 
-          // Intentional Sleek Architectural Trim Lines along nacelle ridges (Sword Breaker curved grace!)
+          // Intentional Sleek Architectural Trim Lines along canted nacelle chines
           const crestPts = [], outerPts = [], cheekPts = [], innerPts = [];
           for (let k = 0; k < nacSpec.length; k++) {
             const u = k / (nacSpec.length - 1);
@@ -2518,71 +2548,102 @@ em .tk::after,i .tk::after{left:58%}
           addPolyline(cheekPts, '#c9961e', detail === 'high' ? 0.72 : 0.48, 0.62, 0.8);
           addPolyline(innerPts, '#d8a63c', detail === 'high' ? 0.62 : 0.45, 0.52, 0.75);
 
-          // Broad Sculpted Raised Armored Rear Dome Cowl (Ship.paint Top hexagonal/oval twin domes!)
+          // SYDNEY OPERA HOUSE-STYLE LOW-SLUNG POINTED REAR VAULT SHELLS (Overhanging swept sail-beaks both fore & aft!)
+          const domeCant = 12 * Math.PI / 180;
+          const cDC = Math.cos(domeCant), sDC = Math.sin(domeCant);
           const domeSpec = [
-            { x: 14, yc: 14.8, ry: 0.8, zB: 10.6, zT: 11.2 },
-            { x: 21, yc: 16.0, ry: 6.4, zB: 12.8, zT: 18.8 },
-            { x: 31, yc: 16.4, ry: 7.6, zB: 14.0, zT: 21.8 },
-            { x: 41, yc: 16.0, ry: 6.9, zB: 13.4, zT: 20.6 },
-            { x: 48, yc: 15.0, ry: 4.5, zB: 11.2, zT: 15.6 },
-            { x: 52, yc: 14.2, ry: 0.8, zB: 9.0,  zT: 9.6  }
+            { x:  1.5, yc: 12.8, ry: 0.22, zB: 15.6, zT: 16.3 }, // Swept upward cantilevered forward sail-beak over waist!
+            { x: 11.0, yc: 13.6, ry: 3.8,  zB: 12.0, zT: 17.8 }, // Concave rising prow vault
+            { x: 22.0, yc: 14.4, ry: 6.6,  zB: 12.2, zT: 20.8 }, // Broad ogive sail flank
+            { x: 33.5, yc: 14.8, ry: 7.5,  zB: 12.6, zT: 22.0 }, // Low-profile pointed vault crown
+            { x: 45.5, yc: 14.4, ry: 5.6,  zB: 12.0, zT: 19.8 }, // Sweeping aft hood
+            { x: 56.5, yc: 13.8, ry: 2.5,  zB: 12.4, zT: 16.6 }, // Cantilevered hood over stern thrusters!
+            { x: 66.8, yc: 13.2, ry: 0.22, zB: 15.4, zT: 16.2 }  // Swept upward protruding aft tail-beak!
           ];
           const dM = detail === 'high' ? 12 : 8;
+          const sampleDome = (st, a) => {
+            const ca = Math.cos(a), sa = Math.sin(a);
+            let ly, lz;
+            if (sa >= 0) {
+              // Pointed ogive sail ridge (Sydney Opera House curvature, sleek & low!)
+              ly = ca * st.ry * (1 - 0.34 * Math.pow(sa, 1.45));
+              lz = (st.zT - st.zB) * Math.pow(sa, 0.85);
+            } else {
+              // Sculpted concave shadow undercut beneath overhanging fore/aft beaks
+              ly = ca * st.ry * 0.88;
+              lz = sa * 1.15;
+            }
+            const rY = ly * cDC - lz * sDC;
+            const rZ = ly * sDC + lz * cDC;
+            return [st.x, side * (st.yc + rY), st.zB + rZ];
+          };
           const domeRings = domeSpec.map(st => {
             const pts = [];
             for (let j = 0; j < dM; j++) {
               const a = (side > 0 ? j : (dM - j) % dM) / dM * Math.PI * 2;
-              const ca = Math.cos(a), sa = Math.sin(a);
-              const z = sa >= 0 ? st.zB + (st.zT - st.zB) * Math.pow(sa, 0.72) : st.zB + sa * 1.4;
-              pts.push([st.x, side * (st.yc + ca * st.ry), z]);
+              pts.push(sampleDome(st, a));
             }
             return pts;
           });
-          addLoft(domeRings, 'dome', 'self', 0.48, false);
-          // Crisp hexagonal/oval gold collar bezel around the dome base & spine crest
-          const collarPts = [
-            [15, side * 14.8, 11.4], [21, side * (16.0 + 6.4), 13.0], [31, side * (16.4 + 7.6), 14.2],
-            [41, side * (16.0 + 6.9), 13.6], [48, side * (15.0 + 4.5), 11.4], [52, side * 14.2, 9.5],
-            [48, side * (15.0 - 4.5), 11.4], [41, side * (16.0 - 6.9), 13.6], [31, side * (16.4 - 7.6), 14.2],
-            [21, side * (16.0 - 6.4), 13.0], [15, side * 14.8, 11.4]
-          ];
-          addPolyline(collarPts, '#f2ca68', detail === 'high' ? 0.92 : 0.65, 0.82, 1.0);
-          addPolyline(domeSpec.map(st => [st.x, side * st.yc, st.zT + 0.15]), '#f5d47a', detail === 'high' ? 0.78 : 0.55, 0.75, 1.0);
+          addLoft(domeRings, (u, j, M) => {
+            const a = ((side > 0 ? j + 0.5 : M - j - 0.5) / M) * Math.PI * 2;
+            const sa = Math.sin(a);
+            return { mat: sa < -0.10 ? 'hullDark' : 'dome', stroke: 'self', sw: 0.46 };
+          }, 'self', 0.46, false);
 
-          // Recessed violet energy well crowning each rear dome (visible in Top & 3/4!)
-          prims.push({ type: 'well', p: [32, side * 16.2, 21.7], rx: 7.4, ry: 4.5 });
+          // Crisp Opera-House pointed keel ridge, outer flared sail rim & nested secondary shell rib!
+          addPolyline(domeSpec.map(st => sampleDome(st, Math.PI * 0.5)), '#f5d47a', detail === 'high' ? 0.98 : 0.65, 0.90, 1.1);
+          addPolyline(domeSpec.map(st => sampleDome(st, 0)),             '#f0c766', detail === 'high' ? 0.88 : 0.60, 0.82, 1.0);
+          addPolyline(domeSpec.map(st => sampleDome(st, Math.PI)),       '#d8a63c', detail === 'high' ? 0.72 : 0.50, 0.74, 0.95);
+          // Secondary nested sail-arch seam sweeping cleanly over the aft half of the shell
+          if (detail === 'high') {
+            const nestPts = [];
+            for (let k = -4; k <= 4; k++) {
+              const ang = Math.PI * 0.5 + (k / 4) * 1.45;
+              const p = sampleDome(domeSpec[3], ang);
+              nestPts.push([p[0] + Math.abs(k) * 1.8, p[1], p[2] + 0.25]);
+            }
+            addPolyline(nestPts, '#f2ca68', 0.68, 0.72, 1.05);
+            // Delicate glowing beak-tip finials fore & aft
+            prims.push({ type: 'dot', p: sampleDome(domeSpec[0], Math.PI * 0.5), r: 1.15, fill: '#f5d47a' });
+            prims.push({ type: 'dot', p: sampleDome(domeSpec[6], Math.PI * 0.5), r: 1.15, fill: '#ff6b7d' });
+          }
 
-          // Delicate scattered micro-Gothic filigree arches & spire accents on nacelle shoulders
+          // Recessed violet energy well seated cleanly in the vaulted saddle
+          const wellP = sampleDome(domeSpec[3], Math.PI * 0.48);
+          prims.push({ type: 'well', p: [wellP[0], wellP[1], wellP[2] - 0.1], rx: 6.4, ry: 3.6 });
+
+          // Delicate scattered micro-Gothic filigree arches along canted nacelle shoulders
           if (detail === 'high') {
             [0.24, 0.46, 0.72].forEach(u => {
               const arc = [];
               for (let k = -3; k <= 3; k++) arc.push(sampleNac(side, u, k * 0.34));
               addPolyline(arc, '#e8bc52', 0.56, 0.55, 0.85);
             });
-            prims.push({ type: 'line', a: [32, side * 16.2, 21.8], b: [34, side * 16.2, 25.0], stroke: '#f3ce74', sw: 0.72 });
-            prims.push({ type: 'dot', p: [34, side * 16.2, 25.0], r: 1.0, fill: '#ff6b7d' });
           }
           // Glowing prow tip jewel
-          prims.push({ type: 'dot', p: [-60, side * 9.8, 0.4], r: detail === 'high' ? 1.9 : 1.1, fill: '#f7db88' });
+          prims.push({ type: 'dot', p: [-60, side * 10.6, 0.4], r: detail === 'high' ? 1.9 : 1.1, fill: '#f7db88' });
 
-          // CLUSTERED SWORD-BREAKER STERN THRUSTER BELLS (1 massive primary + 4 ringed secondary bells!)
+          // CLUSTERED SWORD-BREAKER STERN THRUSTER BELLS (Nestled beneath the cantilevered Opera-House aft hood!)
           const thrusters = [
-            { p: [56.2, side * 14.0,  1.2], r: 4.5, pl: 26 },
-            { p: [53.4, side * 19.2,  6.5], r: 2.4, pl: 14 },
-            { p: [53.4, side * 19.0, -4.6], r: 2.5, pl: 15 },
-            { p: [52.8, side *  9.4,  6.2], r: 2.2, pl: 13 },
-            { p: [52.8, side *  9.6, -4.4], r: 2.3, pl: 13 }
+            { p: [56.2, side * 14.4,  1.2], r: 4.5, pl: 26 },
+            { p: [53.4, side * 19.6,  5.8], r: 2.4, pl: 14 },
+            { p: [53.4, side * 20.6, -4.8], r: 2.5, pl: 15 },
+            { p: [52.8, side *  9.8,  6.2], r: 2.2, pl: 13 },
+            { p: [52.8, side * 10.6, -4.2], r: 2.3, pl: 13 }
           ];
           thrusters.forEach(th => prims.push({ type: 'thruster', p: th.p, dir: [1, 0, 0], r: th.r, plume: th.pl }));
         });
-        anchors.rearDome = [35, -16.2, 21.6];
-        anchors.prow = [-55, -10.8, 0.8];
+        anchors.rearDome = [34, -13.0, 21.6];
+        anchors.prow = [-55, -11.6, 0.8];
 
-        // Scattered micro city-lights on outer curved nacelle flanks (120-km scale cue!)
+        // Scattered micro city-lights on canted outer nacelle flanks (normal rotated by nacCant!)
         if (detail === 'high') {
           hullLights.forEach(hl => {
             const p = sampleNac(hl.side, hl.u, hl.ang);
-            prims.push({ type: 'hullDot', p: [p[0], p[1] + hl.side * 0.42, p[2]], side: hl.side, ang: hl.ang, r: hl.rad, fill: hl.col });
+            const ny0 = Math.cos(hl.ang), nz0 = Math.sin(hl.ang);
+            const ny = ny0 * cCant - nz0 * sCant, nz = ny0 * sCant + nz0 * cCant;
+            prims.push({ type: 'hullDot', p: [p[0], p[1] + hl.side * ny * 0.45, p[2] + nz * 0.45], nVec: [0, hl.side * ny, nz], r: hl.rad, fill: hl.col });
           });
         }
 
@@ -2699,10 +2760,11 @@ em .tk::after,i .tk::after{left:58%}
           const forkSpread = baseChord * 0.48;
           const tk = Math.max(0.95, baseChord * 0.125);
 
-          // Articulated gold-trimmed hinge socket bolted into hull
-          const hA = vAdd(root, chordAxis, -c0 * 0.42), hB = vAdd(root, chordAxis, c0 * 0.42);
-          const hC = vAdd(neck, chordAxis,  c0 * 0.46), hD = vAdd(neck, chordAxis, -c0 * 0.46);
-          prims.push({ type: 'poly', pts: [hA, hB, hC, hD], mat: 'gold', stroke: '#ffe49e', sw: 0.52, twoSide: true });
+          // Articulated tapered hinge socket (sleek dark bronze-violet fairing trimmed in fine gold!)
+          const hScale = 1 - f * 0.35;
+          const hA = vAdd(root, chordAxis, -c0 * 0.30 * hScale), hB = vAdd(root, chordAxis, c0 * 0.30 * hScale);
+          const hC = vAdd(neck, chordAxis,  c0 * 0.42 * hScale), hD = vAdd(neck, chordAxis, -c0 * 0.42 * hScale);
+          prims.push({ type: 'poly', pts: [hA, hB, hC, hD], mat: f > 0.5 ? 'hullDark' : 'gold', stroke: '#e8bc52', sw: 0.55, twoSide: true });
 
           // Key blade outline points (with 3D central ridge thickness!)
           const L0 = vAdd(neck, chordAxis, -c0),  T0 = vAdd(neck, chordAxis, c0);
@@ -2765,25 +2827,36 @@ em .tk::after,i .tk::after{left:58%}
         };
 
         // --- 18 LATERAL PINIONS: 3 Fore-to-Aft Banks x 3 Vertical Tiers x 2 Sides ---
-        // Exact Ship.paint Top & Side + sketch_T115 fan: Fore bank sweeps FORWARD (-13°), Mid perpendicular (+5°), Aft swept back (+20°)!
+        // Exact Ship.paint Top & Side + sketch_T115 fan when unfurled; clip-free feathered armor stack hugging canted flanks when sheathed!
         const lateralBanks = [
-          { x: -24, yRoot: 18.8, spanBase: 94, chord: 13.0, sweep0: -13 },
-          { x:   2, yRoot: 15.6, spanBase: 74, chord: 11.4, sweep0:   5 },
-          { x:  28, yRoot: 21.4, spanBase: 56, chord: 10.4, sweep0:  20 }
+          { x: -24, uNac: 0.30, spanBase: 94, chord: 13.0, sweep0: -13, yNest: [22.2, 26.2, 25.4], zNest: [13.2,  3.2, -7.2], swFold: 89.2 },
+          { x:   2, uNac: 0.53, spanBase: 74, chord: 11.4, sweep0:   5, yNest: [22.6, 26.0, 25.0], zNest: [14.8,  1.2, -9.2], swFold: 88.2 },
+          { x:  28, uNac: 0.76, spanBase: 56, chord: 10.4, sweep0:  20, yNest: [21.8, 25.4, 24.4], zNest: [16.2, -0.8, -11.0], swFold: 86.8 }
         ];
         const lateralTiers = [
-          { zOff:  8.6, dih0:  26, spanMul: 1.00, bays: true  },
-          { zOff:  1.4, dih0:  10, spanMul: 0.87, bays: true  },
-          { zOff: -5.4, dih0:  -3, spanMul: 0.76, bays: false }
+          { nacAng:  0.64, dih0:  26, dihFold:  4.2, spanMul: 1.00, bays: true  },
+          { nacAng:  0.04, dih0:  10, dihFold:  0.2, spanMul: 0.87, bays: true  },
+          { nacAng: -0.52, dih0:  -3, dihFold: -3.2, spanMul: 0.76, bays: false }
         ];
 
         [-1, 1].forEach(side => {
           lateralBanks.forEach((bk, bi) => {
             lateralTiers.forEach((tr, ti) => {
               const span = bk.spanBase * tr.spanMul;
-              // Fold kinematics: wings sweep smoothly aft around root hinge into ~30 km Run lance!
-              const sweepDeg = bk.sweep0 + f * (85.0 - bk.sweep0);
-              const dihDeg   = tr.dih0 * (1 - f * 0.82) + f * (ti === 0 ? 4 : ti === 1 ? 0 : -4);
+              // Exact unfurled hinge point glued cleanly to the canted nacelle armor flank!
+              const hullSocket = sampleNac(side, bk.uNac, tr.nacAng);
+              // Collision-free sheathed rail nesting flush outside the canted flank & Opera-House vault!
+              const nestRoot = [bk.x + 1.5, side * bk.yNest[ti], bk.zNest[ti]];
+              const root = vLerp(hullSocket, nestRoot, f);
+
+              // Sleek articulated swing-arm spar bridging hull socket to nested wing track as wings fold!
+              if (f > 0.12) {
+                prims.push({ type: 'line', a: hullSocket, b: root, stroke: '#e6b94a', sw: 1.25, op: clamp(f * 1.2, 0, 0.9), zBias: 0.3 });
+              }
+
+              // Fold kinematics: wings sweep aft AND feather their chord plane parallel to the canted flank (ZERO hull clipping!)
+              const sweepDeg = bk.sweep0 + f * (bk.swFold - bk.sweep0);
+              const dihDeg   = tr.dih0 + f * (tr.dihFold - tr.dih0);
               const swR = sweepDeg * Math.PI / 180;
               const dhR = dihDeg * Math.PI / 180;
 
@@ -2792,20 +2865,23 @@ em .tk::after,i .tk::after{left:58%}
                 side * Math.cos(swR) * Math.cos(dhR),
                 Math.sin(dhR) * Math.cos(Math.abs(swR) * 0.72)
               ]);
-              const rawChord = [Math.cos(swR * 0.85), -side * Math.sin(swR * 0.85) * 0.65, 0];
+              // Blend blade chord from broadside horizontal (unfurled) -> feathered vertical tangent to canted flank (sheathed)!
+              const rawChordOpen = [Math.cos(swR * 0.85), -side * Math.sin(swR * 0.85) * 0.65, 0];
+              const rawChordFold = [0, -side * sCant, cCant];
+              const rawChord = vNorm(vLerp(rawChordOpen, rawChordFold, smooth(clamp((f - 0.12) / 0.82, 0, 1))));
               const thickAxis = vNorm(vCross(dirU, vScaleSign(rawChord, side)));
-              const chordAxis = vNorm(vCross(thickAxis, dirU));
-              const chordFixed = chordAxis[0] < 0 ? [-chordAxis[0], -chordAxis[1], -chordAxis[2]] : chordAxis;
+              let chordAxis = vNorm(vCross(thickAxis, dirU));
+              // Keep chord consistent (aft when open, dorsal-tangential when feathered)
+              if (vDot(chordAxis, rawChord) < 0) chordAxis = [-chordAxis[0], -chordAxis[1], -chordAxis[2]];
 
-              const root = [bk.x, side * (bk.yRoot - f * 3.2), tr.zOff * (1 - f * 0.28)];
-              const res = addNezardWing(root, dirU, chordFixed, thickAxis, span * (1 - f * 0.16), bk.chord * (1 - f * 0.24), tr.bays);
+              const res = addNezardWing(root, dirU, chordAxis, thickAxis, span * (1 - f * 0.18), bk.chord * (1 - f * 0.30), tr.bays);
               if (side === 1 && bi === 0 && ti === 0) anchors.foreWing = vLerp(res.mid, res.tip, 0.52);
               if (side === -1 && bi === 1 && ti === 1) anchors.bayWing = vLerp(res.mid, res.tip, 0.35);
             });
           });
         });
 
-        // --- 5 VENTRAL FAN PINIONS (Radiating symmetrically from Third Mini-Nacelle!) ---
+        // --- 5 VENTRAL FAN PINIONS (Radiating symmetrically from Third Mini-Nacelle; close inward between aft pods in Run!) ---
         const ventralFans = [
           { phiDeg: -62, span: 48, chord: 9.4, y0: -4.6, z0: -26.4, bays: true  },
           { phiDeg: -31, span: 40, chord: 8.2, y0: -2.6, z0: -30.0, bays: false },
@@ -2814,9 +2890,9 @@ em .tk::after,i .tk::after{left:58%}
           { phiDeg:  62, span: 48, chord: 9.4, y0:  4.6, z0: -26.4, bays: true  }
         ];
         ventralFans.forEach((vf, idx) => {
-          const phi = vf.phiDeg * Math.PI / 180;
-          // Unfurled: sweeps ~12° aft; Sheathed: folds smoothly ~84° aft tightly along ventral keel!
-          const swDeg = 12 + f * 72;
+          // Close fan smoothly inward as f -> 1 so all 5 blades tuck cleanly between the hanging aft pods (zero clipping!)
+          const phi = vf.phiDeg * (1 - f * 0.62) * Math.PI / 180;
+          const swDeg = 12 + f * 75;
           const swR = swDeg * Math.PI / 180;
           const dirU = vNorm([
             Math.sin(swR),
@@ -2827,8 +2903,8 @@ em .tk::after,i .tk::after{left:58%}
           const thickAxis = vNorm(vCross(dirU, ref));
           let chordAxis = vNorm(vCross(thickAxis, dirU));
           if (chordAxis[0] < 0) chordAxis = [-chordAxis[0], -chordAxis[1], -chordAxis[2]];
-          const root = [-13, vf.y0 * (1 - f * 0.42), vf.z0 + ventLift + f * 3.0];
-          const res = addNezardWing(root, dirU, chordAxis, thickAxis, vf.span * (1 - f * 0.18), vf.chord * (1 - f * 0.22), vf.bays);
+          const root = [-13, vf.y0 * (1 - f * 0.55), vf.z0 + ventLift + f * 3.2];
+          const res = addNezardWing(root, dirU, chordAxis, thickAxis, vf.span * (1 - f * 0.22), vf.chord * (1 - f * 0.28), vf.bays);
           if (idx === 2) anchors.ventralTip = res.tip;
         });
 
@@ -2839,7 +2915,7 @@ em .tk::after,i .tk::after{left:58%}
             [-40, -26, -12], [-40, 26, -12],
             [18, -28, 24], [18, 28, 24]
           ].forEach(([ox, oy, oz]) => {
-            const p = [ox, oy * (1 - f * 0.25), oz];
+            const p = [ox, oy * (1 - f * 0.20), oz];
             const anchor = [ox + 6, oy * 0.54, oz * 0.46];
             prims.push({ type: 'orb', p, anchor, r: 5.2 });
           });
@@ -2848,8 +2924,8 @@ em .tk::after,i .tk::after{left:58%}
         // 7. RUN FIELD RINGS (Ignite smoothly as foldT > 0.35 in Sheathed Run Mode!)
         if (f > 0.35) {
           const rOp = clamp((f - 0.35) / 0.55, 0, 1);
-          prims.push({ type: 'runRing', x: -45, rad: 21.2, col: '#f3ce74', op: rOp });
-          prims.push({ type: 'runRing', x:  48, rad: 21.2, col: '#ff5a6e', op: rOp });
+          prims.push({ type: 'runRing', x: -45, rad: 22.8, col: '#f3ce74', op: rOp });
+          prims.push({ type: 'runRing', x:  48, rad: 25.5, col: '#ff5a6e', op: rOp });
         }
 
         return { prims, anchors };
@@ -2900,7 +2976,7 @@ em .tk::after,i .tk::after{left:58%}
               svg: `<circle cx="${q[0].toFixed(1)}" cy="${q[1].toFixed(1)}" r="${rad.toFixed(2)}" fill="${pr.fill}"/>`
             });
           } else if (pr.type === 'hullDot') {
-            const nApprox = vNorm([0, pr.side * Math.cos(pr.ang), Math.sin(pr.ang)]);
+            const nApprox = pr.nVec ? vNorm(pr.nVec) : vNorm([0, pr.side * Math.cos(pr.ang), Math.sin(pr.ang)]);
             if (vDot(nApprox, cam.F) < 0.22) continue;
             const q = cam.proj(pr.p);
             const rad = Math.max(0.45, pr.r * q[3]);
@@ -3007,9 +3083,9 @@ em .tk::after,i .tk::after{left:58%}
         const op = clamp(1 - distAngle / 14, 0, 1) * clamp(1 - foldT * 2.5, 0, 1);
         if (op < 0.04) { calloutG.innerHTML = ''; return; }
         const items = [
-          { p: anchors.rearDome,   lx: 536, ly: 96,  label: 'Armored Rear Domes & Clustered Stern Thrusters', side: 'R' },
-          { p: anchors.bridge,     lx: 536, ly: 118, label: 'Recessed Curved Core & Streamlined Bridge',      side: 'R' },
-          { p: anchors.foreWing,   lx: 34,  ly: 114, label: '3 Swept Nezard Wing Banks (18 Lateral)',         side: 'L', textW: 226 },
+          { p: anchors.rearDome,   lx: 536, ly: 96,  label: 'Swept Pointed Rear Vaults & Stern Thrusters',    side: 'R' },
+          { p: anchors.bridge,     lx: 536, ly: 118, label: 'Sculpted Core, Bridge & Swept Hull Spans',       side: 'R' },
+          { p: anchors.foreWing,   lx: 34,  ly: 114, label: '3 Swept Wing Banks (18 Lateral)',         side: 'L', textW: 226 },
           { p: anchors.prow,       lx: 34,  ly: 544, label: 'Vertically-Stretched Crescent Twin Nacelles',    side: 'L', textW: 230 },
           { p: anchors.miniNac,    lx: 34,  ly: 568, label: 'Third Ventral Mini-Nacelle & Keel Pylon',        side: 'L', textW: 218 },
           { p: anchors.ventralTip, lx: 34,  ly: 592, label: 'Symmetrical 5-Wing Downward Forked Fan',         side: 'L', textW: 226 },
@@ -3068,7 +3144,7 @@ em .tk::after,i .tk::after{left:58%}
       // INSET B: TOP-DOWN PLAN (Dead-on +Z looking -Z -> exact Ship.paint Top + Nezard delta!)
       const inB = add('g', {});
       addBlueprintFrame(840, 244, 298, 214, 989, 354, inB);
-      txt(989, 263, 'Top-Down Plan · Nezard Delta', 't-name', { fill: '#efe8f5', 'font-size': 13.8, 'text-anchor': 'middle' }, inB);
+      txt(989, 263, 'Top-Down Plan', 't-name', { fill: '#efe8f5', 'font-size': 13.8, 'text-anchor': 'middle' }, inB);
       const camTop = makeCam(0, 90, 989, 354, 1.13, { topDown: true, persp: false });
       add('g', { 'clip-path': 'url(#cd-clip-b)' }, inB).innerHTML = render3D(orthoPrimsUnfurled, camTop, { swMul: 0.72, dotMul: 0.7 });
       txt(989, 448, 'Top · 120 km length · twin rear domes', 't-sub', { fill: '#b5a7c3', 'font-size': 9.0, 'text-anchor': 'middle' }, inB);
