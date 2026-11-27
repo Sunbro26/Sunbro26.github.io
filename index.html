@@ -193,6 +193,8 @@ ol.needle li.hot b{color:var(--crimson)}
 .ship-btn:hover{background:rgba(230,185,74,.16);border-color:rgba(230,185,74,.75)}
 .ship-btn.active{background:rgba(180,140,255,.22);border-color:#e6b94a;color:#fff6dc}
 .shipfig svg{display:block;width:100%;min-width:740px;height:auto;border-radius:10px;touch-action:pan-y;user-select:none}
+.cd-name{font-family:var(--display);font-weight:700}
+.cd-sub{font-family:var(--body)}
 .shipfig figcaption{color:#b9acc9;padding:.2rem .5rem .35rem}
 
 .atlasfig{background:#0b0614;border:1px solid color-mix(in srgb,var(--goldf) 32%,var(--rule));border-radius:16px;padding:.75rem;margin:2.2rem 0}
@@ -3054,8 +3056,8 @@ em .tk::after,i .tk::after{left:58%}
         t.textContent = str; return t;
       };
 
-      const titleEl = txt(34, 42, 'Cēndhar-Class Mobile Battle Station · Unfurled Combat Mode', 't-name', { fill: '#efe8f5', 'font-size': 19.5 });
-      const subEl   = txt(34, 61, 'True 3D Parametric Plate · Curved Twin Nacelles · 25 Articulated Pinions · 120 km Length', 't-sub', { fill: '#b5a7c3', 'font-size': 11.8 });
+      const titleEl = txt(34, 42, 'Cēndhar-Class Mobile Battle Station · Unfurled Combat Mode', 'cd-name', { fill: '#efe8f5', 'font-size': 19.5 });
+      const subEl   = txt(34, 61, 'True 3D Parametric Plate · Curved Twin Nacelles · 25 Articulated Pinions · 120 km Length', 'cd-sub', { fill: '#b5a7c3', 'font-size': 11.8 });
 
       // Clean Calibrated Scale Bar (0 / 30 km Sheathed / 60 / 90 / 120 km Length - evenly spaced, zero overlap!)
       const heroScale = 2.66;
@@ -3065,7 +3067,7 @@ em .tk::after,i .tk::after{left:58%}
         const x = sbX + km * heroScale;
         const major = km === 0 || km === 60 || km === 120;
         add('line', { x1: x.toFixed(1), y1: sbY - (major ? 5.5 : 3.5), x2: x.toFixed(1), y2: sbY + (major ? 5.5 : 3.5), stroke: '#e6b94a', 'stroke-width': major ? 1.2 : 0.9 }, uiG);
-        txt(x.toFixed(1), sbY + 19, km === 0 ? '0' : `${km} km`, 't-sub', { fill: km === 30 ? '#d8b66c' : '#b5a7c3', 'font-size': 10.2, 'text-anchor': km === 0 ? 'start' : km === 120 ? 'end' : 'middle' });
+        txt(x.toFixed(1), sbY + 19, km === 0 ? '0' : `${km} km`, 'cd-sub', { fill: km === 30 ? '#d8b66c' : '#b5a7c3', 'font-size': 10.2, 'text-anchor': km === 0 ? 'start' : km === 120 ? 'end' : 'middle' });
       });
 
       // Default Curated Heroic 3/4 Camera & Preset Angles
@@ -3085,7 +3087,7 @@ em .tk::after,i .tk::after{left:58%}
         const items = [
           { p: anchors.rearDome,   lx: 536, ly: 96,  label: 'Swept Pointed Rear Vaults & Stern Thrusters',    side: 'R' },
           { p: anchors.bridge,     lx: 536, ly: 118, label: 'Sculpted Core, Bridge & Swept Hull Spans',       side: 'R' },
-          { p: anchors.foreWing,   lx: 34,  ly: 114, label: '3 Swept Wing Banks (18 Lateral)',         side: 'L', textW: 226 },
+          { p: anchors.foreWing,   lx: 34,  ly: 114, label: '3 Swept Nezard Wing Banks (18 Lateral)',         side: 'L', textW: 226 },
           { p: anchors.prow,       lx: 34,  ly: 544, label: 'Vertically-Stretched Crescent Twin Nacelles',    side: 'L', textW: 230 },
           { p: anchors.miniNac,    lx: 34,  ly: 568, label: 'Third Ventral Mini-Nacelle & Keel Pylon',        side: 'L', textW: 218 },
           { p: anchors.ventralTip, lx: 34,  ly: 592, label: 'Symmetrical 5-Wing Downward Forked Fan',         side: 'L', textW: 226 },
@@ -3100,13 +3102,13 @@ em .tk::after,i .tk::after{left:58%}
             const elbowX = it.lx - 14;
             out.push(`<polyline points="${tx.toFixed(1)},${ty.toFixed(1)} ${elbowX},${it.ly - 4} ${it.lx - 4},${it.ly - 4}" fill="none" stroke="#e6b94a" stroke-width="0.78" opacity="0.72"/>`);
             out.push(`<circle cx="${tx.toFixed(1)}" cy="${ty.toFixed(1)}" r="2.3" fill="#f3ce74"/>`);
-            out.push(`<text x="${it.lx}" y="${it.ly}" class="t-sub" fill="#e5dbf2" font-size="10.8" text-anchor="start">${it.label}</text>`);
+            out.push(`<text x="${it.lx}" y="${it.ly}" class="cd-sub" fill="#e5dbf2" font-size="10.8" text-anchor="start">${it.label}</text>`);
           } else {
             const lineEnd = it.lx + it.textW;
             const elbowX = Math.max(lineEnd + 10, tx - 14);
             out.push(`<polyline points="${tx.toFixed(1)},${ty.toFixed(1)} ${elbowX.toFixed(1)},${it.ly - 4} ${lineEnd},${it.ly - 4}" fill="none" stroke="#e6b94a" stroke-width="0.78" opacity="0.72"/>`);
             out.push(`<circle cx="${tx.toFixed(1)}" cy="${ty.toFixed(1)}" r="2.3" fill="#f3ce74"/>`);
-            out.push(`<text x="${it.lx}" y="${it.ly}" class="t-sub" fill="#e5dbf2" font-size="10.8" text-anchor="start">${it.label}</text>`);
+            out.push(`<text x="${it.lx}" y="${it.ly}" class="cd-sub" fill="#e5dbf2" font-size="10.8" text-anchor="start">${it.label}</text>`);
           }
         });
         out.push('</g>');
@@ -3136,32 +3138,32 @@ em .tk::after,i .tk::after{left:58%}
       // INSET A: FRONT ELEVATION (Dead-on -X looking +X -> exact Ship.paint Front!)
       const inA = add('g', {});
       addBlueprintFrame(840, 22, 298, 212, 989, 122, inA);
-      txt(989, 41, 'Front Elevation · Unfurled', 't-name', { fill: '#efe8f5', 'font-size': 13.8, 'text-anchor': 'middle' }, inA);
+      txt(989, 41, 'Front Elevation · Unfurled', 'cd-name', { fill: '#efe8f5', 'font-size': 13.8, 'text-anchor': 'middle' }, inA);
       const camFront = makeCam(0, 0, 989, 120, 1.12, { persp: false });
       add('g', { 'clip-path': 'url(#cd-clip-a)' }, inA).innerHTML = render3D(orthoPrimsUnfurled, camFront, { swMul: 0.72, dotMul: 0.7 });
-      txt(989, 224, 'Front · ~30 km core · ~220 km wingspan', 't-sub', { fill: '#b5a7c3', 'font-size': 9.0, 'text-anchor': 'middle' }, inA);
+      txt(989, 224, 'Front · ~30 km core · ~220 km wingspan', 'cd-sub', { fill: '#b5a7c3', 'font-size': 9.0, 'text-anchor': 'middle' }, inA);
 
       // INSET B: TOP-DOWN PLAN (Dead-on +Z looking -Z -> exact Ship.paint Top + Nezard delta!)
       const inB = add('g', {});
       addBlueprintFrame(840, 244, 298, 214, 989, 354, inB);
-      txt(989, 263, 'Top-Down Plan', 't-name', { fill: '#efe8f5', 'font-size': 13.8, 'text-anchor': 'middle' }, inB);
+      txt(989, 263, 'Top-Down Plan · Nezard Delta', 'cd-name', { fill: '#efe8f5', 'font-size': 13.8, 'text-anchor': 'middle' }, inB);
       const camTop = makeCam(0, 90, 989, 354, 1.13, { topDown: true, persp: false });
       add('g', { 'clip-path': 'url(#cd-clip-b)' }, inB).innerHTML = render3D(orthoPrimsUnfurled, camTop, { swMul: 0.72, dotMul: 0.7 });
-      txt(989, 448, 'Top · 120 km length · twin rear domes', 't-sub', { fill: '#b5a7c3', 'font-size': 9.0, 'text-anchor': 'middle' }, inB);
+      txt(989, 448, 'Top · 120 km length · twin rear domes', 'cd-sub', { fill: '#b5a7c3', 'font-size': 9.0, 'text-anchor': 'middle' }, inB);
 
       // INSET C: SIDE ELEVATION (Unfurled) & SHEATHED RUN (~30 km) - clean separation above caption!
       const inC = add('g', {});
       addBlueprintFrame(840, 468, 298, 230, 989, 536, inC);
-      txt(989, 486, 'Side Elevation & Sheathed Run', 't-name', { fill: '#efe8f5', 'font-size': 13.6, 'text-anchor': 'middle' }, inC);
+      txt(989, 486, 'Side Elevation & Sheathed Run', 'cd-name', { fill: '#efe8f5', 'font-size': 13.6, 'text-anchor': 'middle' }, inC);
       const camSide = makeCam(-90, 0, 986, 536, 0.92, { persp: false });
       const camSheathed = makeCam(-90, 0, 980, 651, 0.92, { persp: false });
       const inCG = add('g', { 'clip-path': 'url(#cd-clip-c)' }, inC);
       inCG.innerHTML =
         render3D(orthoPrimsUnfurled, camSide, { swMul: 0.66, dotMul: 0.62 }) +
         '<line x1="854" y1="613" x2="1124" y2="613" stroke="#5b2a86" stroke-opacity="0.52" stroke-dasharray="3 3"/>' +
-        '<text x="854" y="623" class="t-sub" fill="#d8b66c" font-size="7.5" opacity="0.82">SHEATHED RUN (~30 KM)</text>' +
+        '<text x="854" y="623" class="cd-sub" fill="#d8b66c" font-size="7.5" opacity="0.82">SHEATHED RUN (~30 KM)</text>' +
         render3D(orthoPrimsSheathed, camSheathed, { swMul: 0.66, dotMul: 0.62 });
-      txt(989, 689, 'Side & Sheathed (~30 km) · True 120 km scale', 't-sub', { fill: '#b5a7c3', 'font-size': 8.8, 'text-anchor': 'middle' }, inC);
+      txt(989, 689, 'Side & Sheathed (~30 km) · True 120 km scale', 'cd-sub', { fill: '#b5a7c3', 'font-size': 8.8, 'text-anchor': 'middle' }, inC);
 
       // Initial render (zero continuous loop!)
       renderHero();
